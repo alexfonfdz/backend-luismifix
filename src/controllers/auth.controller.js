@@ -48,7 +48,6 @@ export const login = async (req, res) => {
     
     try{
 
-
         if(username === "" || password === "") return res.status(400).json({message: "Por favor, rellene todos los campos"});
 
         const userFound = await User.findOne({username});
@@ -62,7 +61,7 @@ export const login = async (req, res) => {
         const token = await createAccessToken({id: userFound._id, idTypeUser: userFound.idTypeUser});
 
         res.cookie('token', token, {httpOnly: true, sameSite: true});
-
+        
         return res.status(200).json({message: "Inicio de sesión exitoso"});
 
     }catch(error){
