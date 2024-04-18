@@ -6,6 +6,7 @@ import authRoutes from "../routes/auth.routes.js";
 import typesRoutes from "../routes/types.routes.js";
 import productRoutes from "../routes/products.routes.js";
 import purchasesRoutes from "../routes/purchases.routes.js";
+import historyRoutes from "../routes/historys.routes.js";
 
 const app = new Express();
 
@@ -15,9 +16,10 @@ app.use(Express.json());
 app.use(Express.urlencoded({extended: true}));
 app.use(cookieParser());
 
-app.use('/api', authRoutes)
-app.use('/api/types', typesRoutes)
-app.use('/api/products', productRoutes)
-app.use('/api/purchases', purchasesRoutes)
+app.use('/api', authRoutes);
+app.use('/api/types', typesRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/purchases', purchasesRoutes);
+app.use('/api/historys', historyRoutes);
 
 export default app;

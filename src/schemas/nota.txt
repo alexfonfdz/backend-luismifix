@@ -1,0 +1,1 @@
+Aqui irían archivos de validaciones, pero por falta de tiempo, las validaciones se harán en los propios controllers
