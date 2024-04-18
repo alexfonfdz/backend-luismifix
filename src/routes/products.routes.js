@@ -1,9 +1,9 @@
-import Routes from "moongose/routes";
+import { Router } from "express";
 import { createProduct, disableProduct, enableProduct, getAllProducts, getProduct, searchProductForName, updateProduct} from "../controllers/products.controller.js";
 import { authRequiredAdmin } from "../middlewares/validateTokenAdmin.js";
 import { authRequiredAllUsers } from "../middlewares/validateTokenAllUsers.js";
 
-const router = new Routes();
+const router = new Router();
 
 router.post('/', authRequiredAdmin, createProduct);
 router.get('/', authRequiredAllUsers, getAllProducts);

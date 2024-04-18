@@ -1,8 +1,8 @@
-import Routes from "moongose/routes";
+import Router from 'express';
 import { getAllHistoryProducts, getAllHistoryProviders, getAllHistoryPurchases, moreDetailsHistoryProduct, moreDetailsHistoryProvider, moreDetailsHistoryPurchase, searchInHistoryProductsForNameProductUserDate, searchInHistoryProvidersForNameProviderUserDate, searchInHistoryPurchasesForNameProductUserDate} from "../controllers/historys.controller.js";
 import { authRequiredAdmin } from "../middlewares/validateTokenAdmin.js";
 
-const router = new Routes();
+const router = new Router();
 
 router.get('/products', authRequiredAdmin, getAllHistoryProducts);
 router.get('/providers', authRequiredAdmin, getAllHistoryProviders);
