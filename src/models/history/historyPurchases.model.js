@@ -18,7 +18,7 @@ const historyPurchasesSchema = new moongose.Schema({
     },
     dateMovement: {
         type: Date,
-        required: true
+        default: Date.now()
     }
 });
 

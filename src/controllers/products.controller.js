@@ -1,7 +1,7 @@
-import Product from '../models/product/product.model';
-import TypeProduct from '../models/type/typeProduct.model';
-import HistoryProduct from '../models/history/historyProduct.model';
-import MovementType from '../models/type/movementType.model';
+import Product from '../models/product/product.model.js';
+import TypeProduct from '../models/type/typeProduct.model.js';
+import HistoryProduct from '../models/history/historyProduct.model.js';
+import MovementType from '../models/type/movementType.model.js';
 
 export const createProduct = async (req, res) => {
     const { idTypeProduct, nameProduct, amountProduct, priceProduct, descriptionProduct } = req.body;
@@ -54,7 +54,6 @@ export const createProduct = async (req, res) => {
 
 };
 
-
 export const getAllProducts = async (req, res) => {
     try{
         const products = await Product.find().populate('idTypeProduct', 'nameTypeProduct');
@@ -87,16 +86,12 @@ export const searchProductForName = async (req, res) => {
     }
 };
 
-const updateProduct = async (req, res) => {
+export const updateProduct = async (req, res) => {
     const { id } = req.params;
-    const { idTypeProduct, nameProduct, amountProduct, priceProduct, descriptionProduct } = req.body;
+    const { nameProduct, amountProduct, priceProduct, descriptionProduct } = req.body;
 
     try{
-        if(idTypeProduct === "" || nameProduct === "" || amountProduct === "" || priceProduct === "" || descriptionProduct === "") return res.status(400).json({message: "Por favor, rellene todos los campos"});
-
-        const idTypeProductFound = await TypeProduct.findById(idTypeProduct);
-
-        if(!idTypeProductFound) return res.status(400).json({message: "Tipo de producto no encontrado"});
+        if(nameProduct === "" || amountProduct === "" || priceProduct === "" || descriptionProduct === "") return res.status(400).json({message: "Por favor, rellene todos los campos"});
 
         if(amountProduct < 0) return res.status(400).json({message: "La cantidad no puede ser menor a 0"});
         if(priceProduct < 0) return res.status(400).json({message: "El precio no puede ser menor a 0"});
@@ -111,19 +106,16 @@ const updateProduct = async (req, res) => {
 
         if(!productFound) return res.status(404).json({message: "Producto no encontrado"});
 
-        const productExists = await Product.findOne({nameProduct});
-
-        if(productExists && productExists._id != id) return res.status(400).json({message: "El producto ya existe"});
-
         const productUpdated = await Product.findByIdAndUpdate(id, {
-            idTypeProduct,
             nameProduct,
             amountProduct,
             priceProduct,
             descriptionProduct
         });
 
-        const movementTypeFound = await MovementType({nameMovementType: "UPDATE"});
+        await productUpdated.save();
+
+        const movementTypeFound = await MovementType.findOne({nameMovementType: "UPDATE"});
 
         const newHistoryProduct = new HistoryProduct({
             idProduct: id,
