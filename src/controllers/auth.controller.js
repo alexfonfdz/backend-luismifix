@@ -1,8 +1,6 @@
 import User from "../models/user/user.model.js";
 import TypeUser from "../models/type/typeUser.model.js";
 import bcrypt from "bcryptjs";
-import connectDB from "../db/db.js";
-import mongoData from "../middlewares/mongoData.js";
 import { createAccessToken } from "../libs/jwt.js";
 
 export const register = async (req, res) => {
@@ -61,7 +59,7 @@ export const login = async (req, res) => {
         const token = await createAccessToken({id: userFound._id, idTypeUser: userFound.idTypeUser});
 
         res.cookie('token', token, {httpOnly: true, sameSite: true});
-        
+
         return res.status(200).json({message: "Inicio de sesión exitoso"});
 
     }catch(error){

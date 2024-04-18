@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRoutes from "../routes/auth.routes.js";
+import typesRoutes from "../routes/types.routes.js";
 
 const app = new Express();
 
@@ -13,5 +14,6 @@ app.use(Express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.use('/api', authRoutes)
+app.use('/types', typesRoutes)
 
 export default app;
