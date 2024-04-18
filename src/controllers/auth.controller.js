@@ -72,3 +72,12 @@ export const logout = async (req, res) => {
     res.cookie('token', "",{expires: new Date(0)});
     return res.status(200).json({message: "Cierre de sesión exitoso"});
 };
+
+export const profile = async (req, res) => {
+    try{
+        const user = await User.findById(req.user.id).select("-password");
+        if(!user) return res.status(404).json({message: "Usuario no encontrado"});
+        return res.status(200).json(user);
+    }catch(error){
+        return res.status(500).json({message: error.message});
+}};

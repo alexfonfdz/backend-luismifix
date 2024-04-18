@@ -14,6 +14,6 @@ app.use(Express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.use('/api', authRoutes)
-app.use('/types', typesRoutes)
+app.use('/api/types', typesRoutes)
 
 export default app;

@@ -1,14 +1,15 @@
 import { Router } from "express";
 import { typesUser, tyoesStatusRepair, typesContact, typesProduct, typesProvider, typesUrgency } from "../controllers/types.controller.js";
+import { authRequiredAdmin } from "../middlewares/validateTokenAdmin.js";
 
 const router = Router();
 
-router.get("/typesUser", typesUser);
-router.get("/typesContact", typesContact);
-router.get("/typesProduct", typesProduct);
-router.get("/typesProvider", typesProvider);
-router.get("/typesStatusRepair", tyoesStatusRepair);
-router.get("/typesUrgency", typesUrgency);
+router.get("/typesUser", authRequiredAdmin, typesUser);
+router.get("/typesContact", authRequiredAdmin, typesContact);
+router.get("/typesProduct", authRequiredAdmin, typesProduct);
+router.get("/typesProvider", authRequiredAdmin, typesProvider);
+router.get("/typesStatusRepair", authRequiredAdmin, tyoesStatusRepair);
+router.get("/typesUrgency", authRequiredAdmin, typesUrgency);
 
 
 export default router;
