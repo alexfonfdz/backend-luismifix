@@ -58,7 +58,7 @@ export const login = async (req, res) => {
 
         const userEnabled = userFound.statusUser;
 
-        if(!userEnabled) return res.status(400).json({message: "Usuario posiblemente deshabilitado"});
+        if(userEnabled == false) return res.status(400).json({message: "Usuario posiblemente deshabilitado"});
 
         const token = await createAccessToken({id: userFound._id, idTypeUser: userFound.idTypeUser});
 
