@@ -92,7 +92,7 @@ export const enablePurchase = async (req, res) => {
         purchaseFound.statusPurchase = true;
         await purchaseFound.save();
 
-        const movementTypeFound = await Movement.findOne({nameMovementType: "ENABLE"});
+        const movementTypeFound = await MovementType.findOne({nameMovementType: "ENABLE"});
         
         const newHistoryPurchases = new HistoryPurchases({
             idPurchase: id,
@@ -120,7 +120,7 @@ export const disablePurchase = async (req, res) => {
         purchaseFound.statusPurchase = false;
         await purchaseFound.save();
 
-        const movementTypeFound = await Movement.findOne({nameMovementType: "DISABLE"});
+        const movementTypeFound = await MovementType.findOne({nameMovementType: "DISABLE"});
 
         const newHistoryPurchases = new HistoryPurchases({
             idPurchase: id,
@@ -156,7 +156,7 @@ export const updatePurchase = async (req, res) => {
 
         await purchaseUpdated.save();
 
-        const movementTypeFound = await Movement.findOne({nameMovementType: "UPDATE"});
+        const movementTypeFound = await MovementType.findOne({nameMovementType: "UPDATE"});
         const newHistoryPurchases = new HistoryPurchases({
             idPurchase: id,
             idMovementType: movementTypeFound._id,
