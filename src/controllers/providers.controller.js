@@ -63,7 +63,12 @@ export const getProvider = async (req, res) => {
 export const getProviderContacts = async (req, res) => {
     try{
         const { idProvider } = req.params;
-        const providerContacts = await ProviderContact.find({ idProvider }).populate('idTypeContact', 'nameTypeContact').populate('idProvider', 'nameProvider');
+
+        const provider = await Provider.findById(idProvider);
+
+        if(!provider) return res.status(404).json({ message: 'Proveedor no encontrado' });
+
+        const providerContacts = await ProviderContact.find({ idProvider: provider.id }).populate('idTypeContact', 'nameTypeContact').populate('idProvider', 'nameProvider');
 
         return res.status(200).json(providerContacts);
 
@@ -131,7 +136,7 @@ export const updateProvider = async (req, res) => {
 
         if(providerExists && providerExists._id != id) return res.status(400).json({ message: 'Ya existe un proveedor con ese nombre' });
 
-        const newProvider = new Provider.findByIdAndUpdate(id, { idTypeProvider, nameProvider, noteProvider });
+        const newProvider = await Provider.findByIdAndUpdate(id, { idTypeProvider, nameProvider, noteProvider });
 
         await newProvider.save();
 
@@ -203,23 +208,19 @@ export const enableProvider = async (req, res) => {
 export const updateProviderContact = async (req, res) => {
     try{
         const { id } = req.params;
-        const { idTypeContact, idProvider, data } = req.body;
+        const { idTypeContact, data } = req.body;
 
-        if(!idTypeContact || !idProvider || !data) return res.status(400).json({ message: 'No puede haber datos vacíos' });
+        if(!idTypeContact || !data) return res.status(400).json({ message: 'No puede haber datos vacíos' });
 
         const typeContact = await TypeContact.findById(idTypeContact);
 
         if(!typeContact) return res.status(400).json({ message: 'Tipo de contacto no encontrado' });
 
-        const provider = await Provider.findById(idProvider);
-
-        if(!provider) return res.status(400).json({ message: 'Proveedor no encontrado' });
-
         const providerContact = await ProviderContact.findById(id);
 
         if(!providerContact) return res.status(404).json({ message: 'Contacto de proveedor no encontrado' });
 
-        const newProviderContact = new ProviderContact.findByIdAndUpdate(id, { idTypeContact, idProvider, data });
+        const newProviderContact = await ProviderContact.findByIdAndUpdate(id, { idTypeContact, data });
 
         await newProviderContact.save();
 

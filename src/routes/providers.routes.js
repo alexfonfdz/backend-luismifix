@@ -9,7 +9,7 @@ router.post('/', authRequiredAdmin, createProvider);
 router.post('/contact', authRequiredAdmin, createProviderContact);
 router.get('/', authRequiredAllUsers, getProviders);
 router.get('/provider/:id', authRequiredAllUsers, getProvider);
-router.get('/contacts/:id', authRequiredAllUsers, getProviderContacts);
+router.get('/contacts/:idProvider', authRequiredAllUsers, getProviderContacts);
 router.get('/search/:name', authRequiredAllUsers, searchProviderForName);
 router.put('/:id', authRequiredAdmin, updateProvider);
 router.put('/contact/:id', authRequiredAdmin, updateProviderContact);
