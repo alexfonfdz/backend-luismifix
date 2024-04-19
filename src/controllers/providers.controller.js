@@ -1,7 +1,7 @@
 import Provider from '../models/provider/provider.model.js';
 import ProviderContact from '../models/provider/providerContact.model.js';
-import TypeProvider from '../models/provider/typeProvider.model.js';
-import TypeContact from '../models/provider/typeContact.model.js';
+import TypeProvider from '../models/type/typeProvider.model.js';
+import TypeContact from '../models/type/typeContact.model.js';
 import HistoryProvider from '../models/history/historyProvider.model.js';
 import MovementType from '../models/type/movementType.model.js';
 

@@ -1,4 +1,9 @@
 import TypeUser from '../models/type/typeUser.model.js';
+import TypeContact from '../models/type/typeContact.model.js';
+import TypeProduct from '../models/type/typeProduct.model.js';
+import TypeProvider from '../models/type/typeProvider.model.js';
+import TypeStatusRepair from '../models/type/typeStatusRepair.model.js';
+import TypeUrgency from '../models/type/typeUrgency.model.js';
 
 export const typesUser = async (req, res) => {
     try{

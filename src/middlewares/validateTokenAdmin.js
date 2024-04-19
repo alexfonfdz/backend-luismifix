@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { SECRET } from "../server/config.js";
-import TypeUser from "../models/TypeUser.js";
+import TypeUser from "../models/type/typeUser.model.js";
 
 export const authRequiredAdmin = (req, res, next) => {
     const { token } = req.cookies;

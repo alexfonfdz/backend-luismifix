@@ -1,6 +1,6 @@
 import Purchases from '../models/purchases/purchases.model.js';
 import Provider from '../models/provider/provider.model.js';
-import Product from '../models/products/product.model.js';
+import Product from '../models/product/product.model.js';
 import MovementType from '../models/type/movementType.model.js';
 import HistoryPurchases from '../models/history/historyPurchases.model.js';
 
