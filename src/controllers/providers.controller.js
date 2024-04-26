@@ -119,6 +119,8 @@ export const updateProvider = async (req, res) => {
     try{
         const { id } = req.params;
         const { idTypeProvider, nameProvider, noteProvider } = req.body;
+        console.log(req)
+        console.log(req.body)
 
         if(!idTypeProvider || !nameProvider || !noteProvider) return res.status(400).json({ message: 'No puede haber datos vacíos' });
         if(nameProvider.length > 50) return res.status(400).json({ message: 'El nombre del proveedor no puede tener más de 50 caracteres' });
@@ -132,8 +134,10 @@ export const updateProvider = async (req, res) => {
 
         if(!provider) return res.status(404).json({ message: 'Proveedor no encontrado' });
 
-        const providerExists = await Provider.findOne({ name : nameProvider });
-
+        const providerExists = await Provider.findOne({ nameProvider });
+        console.log(providerExists)
+        console.log('Id Query: ', id)
+        console.log(provider)
         if(providerExists && providerExists._id != id) return res.status(400).json({ message: 'Ya existe un proveedor con ese nombre' });
 
         const newProvider = await Provider.findByIdAndUpdate(id, { idTypeProvider, nameProvider, noteProvider });
