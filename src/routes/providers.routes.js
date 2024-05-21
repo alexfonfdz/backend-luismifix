@@ -15,6 +15,6 @@ router.put('/:id', authRequiredAdmin, updateProvider);
 router.put('/contact/:id', authRequiredAdmin, updateProviderContact);
 router.put('/disable/:id', authRequiredAdmin, disableProvider);
 router.put('/enable/:id', authRequiredAdmin, enableProvider);
-router.put('/contacts/disable/:id', authRequiredAdmin, disableProviderContact);
+router.put('/contact/disable/:id', authRequiredAdmin, disableProviderContact);
 
 export default router;
