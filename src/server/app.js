@@ -30,7 +30,7 @@ app.use('/api/historys', historyRoutes);
 app.use('/api/providers', providersRoutes);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(import.meta.dirname, '..', 'public', 'index.html'));
-});
+    return res.sendFile(path.join(path.resolve(), "public", "index.html"))
+})
 
 export default app;
