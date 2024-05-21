@@ -15,6 +15,10 @@ const providerContactSchema = new moongose.Schema({
         type: String,
         required: true,
         trim: true
+    },
+    statusContact: {
+        type: Boolean,
+        default: true,
     }
 });
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProvider, createProviderContact, disableProvider, enableProvider, getProvider, getProviderContacts, getProviders, searchProviderForName, updateProvider, updateProviderContact} from "../controllers/providers.controller.js";
+import { createProvider, createProviderContact, disableProvider, disableProviderContact, enableProvider, getProvider, getProviderContacts, getProviders, searchProviderForName, updateProvider, updateProviderContact} from "../controllers/providers.controller.js";
 import { authRequiredAdmin } from "../middlewares/validateTokenAdmin.js";
 import { authRequiredAllUsers } from "../middlewares/validateTokenAllUsers.js";
 
@@ -15,5 +15,6 @@ router.put('/:id', authRequiredAdmin, updateProvider);
 router.put('/contact/:id', authRequiredAdmin, updateProviderContact);
 router.put('/disable/:id', authRequiredAdmin, disableProvider);
 router.put('/enable/:id', authRequiredAdmin, enableProvider);
+router.put('/contacts/disable/:id', authRequiredAdmin, disableProviderContact);
 
 export default router;

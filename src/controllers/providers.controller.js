@@ -234,3 +234,20 @@ export const updateProviderContact = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
+
+export const disableProviderContact = async (req, res) => {
+        const { id } = req.params;
+    
+        try{
+            const contactFound = await ProviderContact.findById(id);
+    
+            if(!contactFound) return res.status(404).json({message: "Contacto no encontrado"});
+    
+            const contactDisabled = await ProviderContact.findByIdAndUpdate(id, {statusContact: false});
+          
+            return res.status(200).json({message: "Contacto deshabilitado con éxito"});
+    
+        }catch(error){
+            return res.status(500).json({message: error.message});
+        }
+}
