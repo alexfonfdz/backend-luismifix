@@ -11,6 +11,7 @@ import providersRoutes from "../routes/providers.routes.js";
 import dialogFlowRoutes from "../routes/dialogFlow.routes.js";
 import fulfillmentRoutes from "../routes/fulfillment.routes.js";
 import bodyParser from "body-parser";
+import { FRONT_URL } from "./config.js";
 import path from 'path';
 
 const app = new Express();
@@ -18,7 +19,7 @@ const app = new Express();
 app.use(morgan("dev"));
 app.use(cookieParser());
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: FRONT_URL,
   credentials: true,
   optionSuccessStatus: 200
 };
