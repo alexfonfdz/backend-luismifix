@@ -1,0 +1,79 @@
+import dialogFlow from "dialogflow";
+import { jsonToStructProto } from "./structjson.controller.js";
+import config from "../server/keys.js";
+
+const projectID = config.googleProjectID;
+const sessionID = config.dialogFlowSessionID;
+const languageCode = config.dialogFlowSessionLanguageCode;
+
+const credentials = {
+  client_email: config.googleClientEmail,
+  private_key: config.googlePrivateKey
+};
+
+const sessionClient = new dialogFlow.SessionsClient({ projectID, credentials });
+
+const textQuery = async function(text, userID, parameters = {}) {
+  let sessionPath = sessionClient.sessionPath(projectID, sessionID + userID);
+
+  const request = {
+    session: sessionPath,
+    queryInput: {
+      text: {
+        text: text,
+        languageCode: languageCode
+      }
+    },
+    queryParams: {
+      payload: {
+        data: parameters
+      }
+    }
+  };
+
+  try {
+    let responses = await sessionClient.detectIntent(request);
+    console.log("Dialogflow response:", responses);
+    responses = await handleAction(responses);
+    return responses;
+  } catch (error) {
+    console.error("Error connecting to Dialogflow:", error);
+    throw error;
+  }
+};
+
+const eventQuery = async function(event, userID, parameters = {}) {
+  let sessionPath = sessionClient.sessionPath(projectID, sessionID + userID);
+
+  const request = {
+    session: sessionPath,
+    queryInput: {
+      event: {
+        name: event,
+        parameters: jsonToStructProto(parameters),
+        languageCode: languageCode
+      }
+    }
+  };
+
+  try {
+    let responses = await sessionClient.detectIntent(request);
+    console.log("Dialogflow response:", responses);
+    responses = await handleAction(responses);
+    return responses;
+  } catch (error) {
+    console.error("Error connecting to Dialogflow:", error);
+    throw error;
+  }
+};
+
+const handleAction = function(responses) {
+  let queryResult = responses[0].queryResult;
+  switch (queryResult.action) {
+    case "input.whoAreYou":
+      break;
+  }
+  return responses;
+};
+
+export { textQuery, eventQuery, handleAction };
