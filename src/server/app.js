@@ -13,6 +13,8 @@ import fulfillmentRoutes from "../routes/fulfillment.routes.js";
 import bodyParser from "body-parser";
 import { FRONT_URL } from "./config.js";
 import path from 'path';
+import imageProductRoutes from "../routes/imageProduct.routes.js";
+import historyOrdersRoutes from "../routes/historyOrders.routes.js";
 
 const app = new Express();
 
@@ -26,6 +28,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
+app.use(bodyParser.raw({ type: 'application/json' })); // Necesario para los webhooks de Stripe
 app.use(Express.static(path.resolve(import.meta.dirname, '..', 'public')));
 
 app.use('/api', authRoutes);
@@ -34,6 +37,8 @@ app.use('/api/products', productRoutes);
 app.use('/api/purchases', purchasesRoutes);
 app.use('/api/historys', historyRoutes);
 app.use('/api/providers', providersRoutes);
+app.use('/api/images', imageProductRoutes);
+app.use('/api/historyOrders', historyOrdersRoutes);
 
 app.use(dialogFlowRoutes);
 app.use(fulfillmentRoutes);
