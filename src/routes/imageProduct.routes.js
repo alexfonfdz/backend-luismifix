@@ -5,7 +5,7 @@ import { upload } from '../middlewares/uploadImage.js';
 
 const router = new Router();
 
-router.post('/upload', upload.single('productImage'), uploadImage);
+router.post('/upload/:idProduct/:idUser', upload.single('productImage'), uploadImage);
 router.get('/product/:idProduct', getImagesByProduct);
 
 export default router;

@@ -1,7 +1,8 @@
 import ImageProduct from '../models/product/imageProduct.model.js';
 
 export const uploadImage = async (req, res) => {
-    const { idProduct, idUser } = req.body;
+
+    const { idProduct, idUser } = req.params;
     const productImage = req.file.buffer;
 
     try {
