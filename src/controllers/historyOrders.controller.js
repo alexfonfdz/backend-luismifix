@@ -31,6 +31,10 @@ export const addToCart = async (req, res) => {
     const { userId, productId, quantity } = req.body;
 
     try {
+        const product = await Product.findById(productId);
+        if (!product) return res.status(404).json({ message: 'Producto no encontrado' });
+        if (product.amountProduct < quantity) return res.status(400).json({ message: 'Cantidad no disponible en inventario' });
+
         let cart = await PurchaseHistory.findOne({ userId, status: 'PENDIENTE' });
 
         if (!cart) {
@@ -41,12 +45,9 @@ export const addToCart = async (req, res) => {
 
         if (productIndex > -1) {
             cart.products[productIndex].quantity += quantity;
-            cart.products[productIndex].totalPriceProduct += cart.products[productIndex].quantity * cart.products[productIndex].totalPriceProduct;
+            cart.products[productIndex].totalPriceProduct += product.priceProduct * quantity;
         } else {
-            const product = await Product.findById(productId);
-            if (!product) return res.status(404).json({ message: 'Producto no encontrado' });
-
-            cart.products.push({ productId, quantity, totalPriceProduct: product.price * quantity });
+            cart.products.push({ productId, quantity, totalPriceProduct: product.priceProduct * quantity });
         }
 
         cart.totalAmount = cart.products.reduce((total, item) => total + item.totalPriceProduct, 0);
@@ -75,14 +76,17 @@ export const updateCart = async (req, res) => {
     const { userId, productId, quantity } = req.body;
 
     try {
+        const product = await Product.findById(productId);
+        if (!product) return res.status(404).json({ message: 'Producto no encontrado' });
+        if (product.amountProduct < quantity) return res.status(400).json({ message: 'Cantidad no disponible en inventario' });
+
         const cart = await PurchaseHistory.findOne({ userId, status: 'PENDIENTE' });
         if (!cart) return res.status(404).json({ message: 'Carrito no encontrado' });
 
         const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
         if (productIndex > -1) {
             cart.products[productIndex].quantity = quantity;
-            const product = await Product.findById(productId);
-            cart.products[productIndex].totalPriceProduct = product.price * quantity;
+            cart.products[productIndex].totalPriceProduct = product.priceProduct * quantity;
         } else {
             return res.status(404).json({ message: 'Producto no encontrado en el carrito' });
         }
@@ -119,12 +123,12 @@ export const createCheckoutSession = async (req, res) => {
 
         const lineItems = cart.products.map(item => ({
             price_data: {
-                currency: 'usd',
+                currency: 'mxn',
                 product_data: {
-                    name: item.productId.name,
+                    name: item.productId.nameProduct,
                     images: [item.productId.image],
                 },
-                unit_amount: item.productId.price * 100,
+                unit_amount: item.productId.priceProduct * 100,
             },
             quantity: item.quantity,
         }));
@@ -158,10 +162,17 @@ export const handleWebhook = async (req, res) => {
         const session = event.data.object;
 
         // Actualizar el historial de compras con estado 'COMPLETO'
-        await PurchaseHistory.findOneAndUpdate(
+        const purchase = await PurchaseHistory.findOneAndUpdate(
             { userId: session.client_reference_id, status: 'PENDIENTE' },
             { status: 'COMPLETO' }
         );
+
+        // Actualizar el inventario de productos
+        for (const item of purchase.products) {
+            await Product.findByIdAndUpdate(item.productId, {
+                $inc: { amountProduct: -item.quantity }
+            });
+        }
     } else if (event.type === 'checkout.session.async_payment_failed') {
         const session = event.data.object;
 
