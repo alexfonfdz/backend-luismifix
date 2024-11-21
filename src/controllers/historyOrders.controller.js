@@ -85,8 +85,12 @@ export const updateCart = async (req, res) => {
 
         const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
         if (productIndex > -1) {
-            cart.products[productIndex].quantity = quantity;
-            cart.products[productIndex].totalPriceProduct = product.priceProduct * quantity;
+            if (quantity === 0) {
+                cart.products.splice(productIndex, 1);
+            } else {
+                cart.products[productIndex].quantity = quantity;
+                cart.products[productIndex].totalPriceProduct = product.priceProduct * quantity;
+            }
         } else {
             return res.status(404).json({ message: 'Producto no encontrado en el carrito' });
         }
@@ -97,6 +101,29 @@ export const updateCart = async (req, res) => {
         res.status(200).json(cart);
     } catch (error) {
         res.status(500).json({ message: 'Error al actualizar el carrito', error });
+    }
+};
+
+export const removeFromCart = async (req, res) => {
+    const { userId, productId } = req.body;
+
+    try {
+        const cart = await PurchaseHistory.findOne({ userId, status: 'PENDIENTE' });
+        if (!cart) return res.status(404).json({ message: 'Carrito no encontrado' });
+
+        const productIndex = cart.products.findIndex(p => p.productId.toString() === productId);
+        if (productIndex > -1) {
+            cart.products.splice(productIndex, 1);
+        } else {
+            return res.status(404).json({ message: 'Producto no encontrado en el carrito' });
+        }
+
+        cart.totalAmount = cart.products.reduce((total, item) => total + item.totalPriceProduct, 0);
+
+        await cart.save();
+        res.status(200).json(cart);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al eliminar el producto del carrito', error });
     }
 };
 
