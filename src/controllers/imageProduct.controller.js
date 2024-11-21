@@ -1,7 +1,7 @@
 import ImageProduct from '../models/product/imageProduct.model.js';
 
+// Controlador para subir una imagen de producto
 export const uploadImage = async (req, res) => {
-
     const { idProduct, idUser } = req.params;
     const productImage = req.file.buffer;
 
@@ -14,6 +14,7 @@ export const uploadImage = async (req, res) => {
     }
 };
 
+// Controlador para obtener las imágenes de un producto por su ID
 export const getImagesByProduct = async (req, res) => {
     const { idProduct } = req.params;
 

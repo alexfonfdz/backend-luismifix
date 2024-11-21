@@ -3,6 +3,7 @@ import TypeUser from "../models/type/typeUser.model.js";
 import bcrypt from "bcryptjs";
 import { createAccessToken } from "../libs/jwt.js";
 
+// Controlador para registrar un nuevo usuario
 export const register = async (req, res) => {
     const { typeUser, username, email, password } = req.body;
 
@@ -38,14 +39,13 @@ export const register = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
-
 };
 
+// Controlador para iniciar sesión
 export const login = async (req, res) => {
     const { username, password } = req.body;
 
     try {
-
         if (username === "" || password === "") return res.status(400).json({ message: "Por favor, rellene todos los campos" });
 
         const userFound = await User.findOne({ username });
@@ -69,14 +69,15 @@ export const login = async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-
 };
 
+// Controlador para cerrar sesión
 export const logout = async (req, res) => {
     res.cookie('token', "", { expires: new Date(0) });
     return res.status(200).json({ message: "Cierre de sesión exitoso" });
 };
 
+// Controlador para obtener el perfil del usuario autenticado
 export const profile = async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select("-password").populate('idTypeUser', 'nameTypeUser');
@@ -87,6 +88,7 @@ export const profile = async (req, res) => {
     }
 };
 
+// Controlador para obtener todos los usuarios
 export const getUsers = async (req, res) => {
     try {
         const users = await User.find().populate('idTypeUser', 'nameTypeUser');
@@ -96,6 +98,7 @@ export const getUsers = async (req, res) => {
     }
 };
 
+// Controlador para obtener un usuario por su ID
 export const getUser = async (req, res) => {
     const { id } = req.params;
 
@@ -108,6 +111,7 @@ export const getUser = async (req, res) => {
     }
 };
 
+// Controlador para buscar usuarios por nombre de usuario
 export const searchUserForUsername = async (req, res) => {
     const { username } = req.params;
 
@@ -119,6 +123,7 @@ export const searchUserForUsername = async (req, res) => {
     }
 };
 
+// Controlador para actualizar un usuario
 export const updateUser = async (req, res) => {
     const { id } = req.params;
     const { typeUser, username, email } = req.body;
@@ -159,6 +164,7 @@ export const updateUser = async (req, res) => {
     }
 };
 
+// Controlador para cambiar la contraseña de un usuario
 export const changePassword = async (req, res) => {
     const { id } = req.params;
     const { password } = req.body;
@@ -181,6 +187,7 @@ export const changePassword = async (req, res) => {
     }
 };
 
+// Controlador para deshabilitar un usuario
 export const disableUser = async (req, res) => {
     const { id } = req.params;
 
@@ -198,6 +205,7 @@ export const disableUser = async (req, res) => {
     }
 };
 
+// Controlador para habilitar un usuario
 export const enableUser = async (req, res) => {
     const { id } = req.params;
 

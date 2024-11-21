@@ -3,6 +3,7 @@ import Product from '../models/product/product.model.js';
 import stripe from '../libs/stripe.js';
 import { STRIPE_WEBHOOK_SECRET } from '../server/config.js';
 
+// Controlador para obtener el historial de compras de un usuario
 export const getPurchaseHistoryByUser = async (req, res) => {
     const { userId } = req.params;
 
@@ -16,6 +17,7 @@ export const getPurchaseHistoryByUser = async (req, res) => {
     }
 };
 
+// Controlador para obtener todos los historiales de compras
 export const getAllPurchaseHistories = async (req, res) => {
     try {
         const histories = await PurchaseHistory.find().populate('userId').populate('products.productId');
@@ -27,6 +29,7 @@ export const getAllPurchaseHistories = async (req, res) => {
     }
 };
 
+// Controlador para agregar un producto al carrito
 export const addToCart = async (req, res) => {
     const { userId, productId, quantity } = req.body;
 
@@ -59,6 +62,7 @@ export const addToCart = async (req, res) => {
     }
 };
 
+// Controlador para obtener el carrito de un usuario
 export const getCart = async (req, res) => {
     const { userId } = req.params;
 
@@ -72,6 +76,7 @@ export const getCart = async (req, res) => {
     }
 };
 
+// Controlador para actualizar el carrito
 export const updateCart = async (req, res) => {
     const { userId, productId, quantity } = req.body;
 
@@ -104,6 +109,7 @@ export const updateCart = async (req, res) => {
     }
 };
 
+// Controlador para eliminar un producto del carrito
 export const removeFromCart = async (req, res) => {
     const { userId, productId } = req.body;
 
@@ -127,6 +133,7 @@ export const removeFromCart = async (req, res) => {
     }
 };
 
+// Controlador para calcular el precio total del carrito
 export const calculateTotalPrice = async (req, res) => {
     const { userId } = req.params;
 
@@ -141,6 +148,7 @@ export const calculateTotalPrice = async (req, res) => {
     }
 };
 
+// Controlador para crear una sesión de pago
 export const createCheckoutSession = async (req, res) => {
     const { userId } = req.body;
 
@@ -175,6 +183,7 @@ export const createCheckoutSession = async (req, res) => {
     }
 };
 
+// Controlador para manejar los webhooks de Stripe
 export const handleWebhook = async (req, res) => {
     const sig = req.headers['stripe-signature'];
 

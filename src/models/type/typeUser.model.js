@@ -1,11 +1,13 @@
-import moongose from 'mongoose';
+import mongoose from 'mongoose'; // Importa Mongoose para definir el esquema y el modelo
 
-const typeUserSchema = new moongose.Schema({
+// Define el esquema de tipo de usuario
+const typeUserSchema = new mongoose.Schema({
     nameTypeUser: {
-        type: String,
-        required: true,
-        trim: true
+        type: String, // Tipo de dato String
+        required: true, // Campo requerido
+        trim: true // Elimina espacios en blanco al inicio y al final
     }
 });
 
-export default moongose.model('TypeUser', typeUserSchema);
+// Exporta el modelo de tipo de usuario basado en el esquema definido
+export default mongoose.model('TypeUser', typeUserSchema);

@@ -1,28 +1,30 @@
-import moongose from 'mongoose';
+import moongose from 'mongoose'; // Importa Mongoose para definir el esquema y el modelo
 
+// Define el esquema de compra a proveedores
 const purchaseSchema = new moongose.Schema({
     idProduct: {
-        type: moongose.Schema.Types.ObjectId,
-        ref: 'Product',
-        required: true
+        type: moongose.Schema.Types.ObjectId, // Tipo de dato ObjectId de Mongoose
+        ref: 'Product', // Referencia al modelo Product
+        required: true // Campo requerido
     },
     idProvider: {
-        type: moongose.Schema.Types.ObjectId,
-        ref: 'Provider',
-        required: true
+        type: moongose.Schema.Types.ObjectId, // Tipo de dato ObjectId de Mongoose
+        ref: 'Provider', // Referencia al modelo Provider
+        required: true // Campo requerido
     },
     linkProvider: {
-        type: String,
-        required: true
+        type: String, // Tipo de dato String
+        required: true // Campo requerido
     },
     priceProduct: {
-        type: Number,
-        required: true
+        type: Number, // Tipo de dato Number
+        required: true // Campo requerido
     },
     statusPurchase: {
-        type: Boolean,
-        default: true
+        type: Boolean, // Tipo de dato Boolean
+        default: true // Valor por defecto es true
     }
 });
 
+// Exporta el modelo de compra basado en el esquema definido
 export default moongose.model('Purchase', purchaseSchema);

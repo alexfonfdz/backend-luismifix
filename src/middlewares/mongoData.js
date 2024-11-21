@@ -1,10 +1,10 @@
-import MovementType from '../models/type/movementType.model.js';
-import TypeUser from '../models/type/typeUser.model.js';
-import TypeContact from '../models/type/typeContact.model.js';
-import TypeProduct from '../models/type/typeProduct.model.js';
-import TypeProvider from '../models/type/typeProvider.model.js';
-import TypeStatusRepair from '../models/type/typeStatusRepair.model.js';
-import TypeUrgency from '../models/type/typeUrgency.model.js';
+import MovementType from '../models/type/movementType.model.js'; // Importa el modelo MovementType
+import TypeUser from '../models/type/typeUser.model.js'; // Importa el modelo TypeUser
+import TypeContact from '../models/type/typeContact.model.js'; // Importa el modelo TypeContact
+import TypeProduct from '../models/type/typeProduct.model.js'; // Importa el modelo TypeProduct
+import TypeProvider from '../models/type/typeProvider.model.js'; // Importa el modelo TypeProvider
+import TypeStatusRepair from '../models/type/typeStatusRepair.model.js'; // Importa el modelo TypeStatusRepair
+import TypeUrgency from '../models/type/typeUrgency.model.js'; // Importa el modelo TypeUrgency
 
 const mongoData = async () => {
     const movementTypeData = [
@@ -59,7 +59,7 @@ const mongoData = async () => {
         {nameTypeUrgency: "Alta"},
     ];
 
-    //Ocupo que revise si ya existen los datos en la base de datos y si no, los inserte
+    // Revisa si ya existen los datos en la base de datos y si no, los inserta
     await movementTypeData.forEach(async (data) => {
         const movementTypeFound = await MovementType.findOne({
             nameMovementType: data.nameMovementType,
@@ -126,4 +126,4 @@ const mongoData = async () => {
     console.log("Data inserted!");
 };
 
-export default mongoData;
+export default mongoData; // Exporta la función mongoData

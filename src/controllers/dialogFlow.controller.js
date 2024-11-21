@@ -1,5 +1,6 @@
 import { textQuery, eventQuery } from "../controllers/chatbot.controller.js";
 
+// Controlador para manejar consultas de texto
 export const handleTextQuery = async (req, res) => {
   const { text, userID, parameters } = req.body;
 
@@ -16,6 +17,7 @@ export const handleTextQuery = async (req, res) => {
   }
 };
 
+// Controlador para manejar consultas de eventos
 export const handleEventQuery = async (req, res) => {
   const { event, userID, parameters } = req.body;
 

@@ -4,6 +4,7 @@ import Product from '../models/product/product.model.js';
 import MovementType from '../models/type/movementType.model.js';
 import HistoryPurchases from '../models/history/historyPurchases.model.js';
 
+// Controlador para crear una nueva compra
 export const createPurchase = async (req, res) => {
     const { idProduct, idProvider, linkProvider, priceProduct } = req.body;
 
@@ -46,6 +47,7 @@ export const createPurchase = async (req, res) => {
     }
 };
 
+// Controlador para obtener todas las compras de un proveedor
 export const getAllPurchasesForProvider = async (req, res) => {
     const { idProvider } = req.params;
 
@@ -63,6 +65,7 @@ export const getAllPurchasesForProvider = async (req, res) => {
     }
 };
 
+// Controlador para obtener todas las compras de un producto
 export const getAllPurchasesForProduct = async (req, res) => {
     const { idProduct } = req.params;
 
@@ -80,6 +83,7 @@ export const getAllPurchasesForProduct = async (req, res) => {
     }
 };
 
+// Controlador para habilitar una compra
 export const enablePurchase = async (req, res) => {
     const { id } = req.params;
 
@@ -108,6 +112,7 @@ export const enablePurchase = async (req, res) => {
     }
 };
 
+// Controlador para deshabilitar una compra
 export const disablePurchase = async (req, res) => {
     const { id } = req.params;
 
@@ -136,6 +141,7 @@ export const disablePurchase = async (req, res) => {
     }
 };
 
+// Controlador para actualizar una compra
 export const updatePurchase = async (req, res) => {
     const { id } = req.params;
     const {  linkProvider, priceProduct } = req.body;

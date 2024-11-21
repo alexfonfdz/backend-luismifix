@@ -3,6 +3,7 @@ import TypeProduct from '../models/type/typeProduct.model.js';
 import HistoryProduct from '../models/history/historyProduct.model.js';
 import MovementType from '../models/type/movementType.model.js';
 
+// Controlador para crear un nuevo producto
 export const createProduct = async (req, res) => {
     const { idTypeProduct, nameProduct, amountProduct, priceProduct, descriptionProduct } = req.body;
 
@@ -54,6 +55,7 @@ export const createProduct = async (req, res) => {
 
 };
 
+// Controlador para obtener todos los productos
 export const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find().populate('idTypeProduct', 'nameTypeProduct');
@@ -63,6 +65,7 @@ export const getAllProducts = async (req, res) => {
     }
 };
 
+// Controlador para obtener un producto por su ID
 export const getProduct = async (req, res) => {
     const { id } = req.params;
 
@@ -75,6 +78,7 @@ export const getProduct = async (req, res) => {
     }
 };
 
+// Controlador para buscar productos por nombre
 export const searchProductForName = async (req, res) => {
     const { name } = req.params;
 
@@ -86,6 +90,7 @@ export const searchProductForName = async (req, res) => {
     }
 };
 
+// Controlador para buscar productos por tipo
 export const searchProductsByType = async (req, res) => {
     const { idTypeProduct } = req.params;
 
@@ -101,6 +106,7 @@ export const searchProductsByType = async (req, res) => {
     }
 };
 
+// Controlador para actualizar un producto
 export const updateProduct = async (req, res) => {
     const { id } = req.params;
     const { nameProduct, amountProduct, priceProduct, descriptionProduct } = req.body;
@@ -148,6 +154,7 @@ export const updateProduct = async (req, res) => {
 
 };
 
+// Controlador para deshabilitar un producto
 export const disableProduct = async (req, res) => {
     const { id } = req.params;
 
@@ -175,6 +182,7 @@ export const disableProduct = async (req, res) => {
     }
 };
 
+// Controlador para habilitar un producto
 export const enableProduct = async (req, res) => {
     const { id } = req.params;
 

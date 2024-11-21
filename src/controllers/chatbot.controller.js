@@ -13,6 +13,7 @@ const credentials = {
 
 const sessionClient = new dialogFlow.SessionsClient({ projectID, credentials });
 
+// Función para manejar consultas de texto
 const textQuery = async function(text, userID, parameters = {}) {
   let sessionPath = sessionClient.sessionPath(projectID, sessionID + userID);
 
@@ -40,6 +41,7 @@ const textQuery = async function(text, userID, parameters = {}) {
   }
 };
 
+// Función para manejar consultas de eventos
 const eventQuery = async function(event, userID, parameters = {}) {
   let sessionPath = sessionClient.sessionPath(projectID, sessionID + userID);
 
@@ -63,6 +65,7 @@ const eventQuery = async function(event, userID, parameters = {}) {
   }
 };
 
+// Función para manejar acciones basadas en la respuesta de Dialogflow
 const handleAction = function(responses) {
   let queryResult = responses[0].queryResult;
   switch (queryResult.action) {
@@ -72,4 +75,4 @@ const handleAction = function(responses) {
   return responses;
 };
 
-export { textQuery, eventQuery, handleAction };
+export { textQuery, eventQuery, handleAction }; // Exporta las funciones para su uso en otros módulos

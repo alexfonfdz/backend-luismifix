@@ -1,5 +1,6 @@
 'use strict';
 
+// Convierte un objeto JSON a un objeto Struct de Protobuf
 function jsonToStructProto(json) {
   const fields = {};
   for (const k in json) {
@@ -21,6 +22,7 @@ const JSON_SIMPLE_VALUE_KINDS = new Set([
   'boolValue',
 ]);
 
+// Convierte un valor JSON a un valor Protobuf
 function jsonValueToProto(value) {
   const valueProto = {};
 
@@ -43,6 +45,7 @@ function jsonValueToProto(value) {
   return valueProto;
 }
 
+// Convierte un objeto Struct de Protobuf a un objeto JSON
 function structProtoToJson(proto) {
   if (!proto || !proto.fields) {
     return {};
@@ -54,6 +57,7 @@ function structProtoToJson(proto) {
   return json;
 }
 
+// Convierte un valor Protobuf a un valor JSON
 function valueProtoToJson(proto) {
   if (!proto || !proto.kind) {
     return null;
@@ -76,4 +80,4 @@ function valueProtoToJson(proto) {
   }
 }
 
-export { jsonToStructProto, structProtoToJson };
+export { jsonToStructProto, structProtoToJson }; // Exporta las funciones para su uso en otros módulos
