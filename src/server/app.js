@@ -37,7 +37,7 @@ app.post('/webhook', bodyParser.raw({ type: 'application/json' }), handleWebhook
 app.use(bodyParser.json());
 
 // Sirve archivos estáticos desde el directorio 'public'
-app.use(Express.static(path.resolve(import.meta.dirname, '..', 'public')));
+app.use(Express.static(path.resolve(import.meta.dirname, '..', '..', 'public')));
 
 // Configuración de rutas
 app.use('/api', authRoutes); // Rutas de autenticación

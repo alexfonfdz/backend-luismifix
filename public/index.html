@@ -1,48 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería de Imágenes del Producto</title>
-    <style>
-        .image-container {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .image-container img {
-            width: 200px;
-            height: 200px;
-            margin: 10px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Galería de Imágenes del Producto</h1>
-    <div id="image-container" class="image-container"></div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const idProduct = '673be4d21da525aa7b00b95f'; // Reemplaza con el ID real del producto
-            const imageContainer = document.getElementById('image-container');
-
-            try {
-                const response = await fetch(`http://localhost:3000/api/images/product/${idProduct}`);
-                const images = await response.json();
-
-                if (images.length > 0) {
-                    images.forEach(image => {
-                        const imgElement = document.createElement('img');
-                        imgElement.src = `data:image/png;base64,${btoa(String.fromCharCode(...new Uint8Array(image.productImage.data)))}`;
-                        imageContainer.appendChild(imgElement);
-                    });
-                } else {
-                    imageContainer.innerHTML = '<p>No se encontraron imágenes para este producto.</p>';
-                }
-            } catch (error) {
-                console.error('Error al recuperar las imágenes:', error);
-                imageContainer.innerHTML = '<p>Error al recuperar las imágenes.</p>';
-            }
-        });
-    </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/logo_luismifix-B1hblJAL.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuisMiFix</title>
+    <script type="module" crossorigin src="/assets/index-CcOvHQX0.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BabfZisM.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>
