@@ -15,6 +15,7 @@ import { FRONT_URL } from "./config.js";
 import path from 'path';
 import imageProductRoutes from "../routes/imageProduct.routes.js";
 import historyOrdersRoutes from "../routes/historyOrders.routes.js";
+import { handleWebhook } from "../controllers/historyOrders.controller.js";
 
 const app = new Express();
 
@@ -27,8 +28,11 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+app.post('/webhook',bodyParser.raw({ type: 'application/json' }),
+handleWebhook
+);
+
 app.use(bodyParser.json());
-app.use(bodyParser.raw({ type: 'application/json' })); // Necesario para los webhooks de Stripe
 app.use(Express.static(path.resolve(import.meta.dirname, '..', 'public')));
 
 app.use('/api', authRoutes);

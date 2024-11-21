@@ -166,6 +166,7 @@ export const createCheckoutSession = async (req, res) => {
             mode: 'payment',
             success_url: `${process.env.FRONTEND_URL}/success`,
             cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+            client_reference_id: userId,
         });
 
         res.json({ id: session.id });

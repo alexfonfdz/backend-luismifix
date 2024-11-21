@@ -33,11 +33,9 @@ const textQuery = async function(text, userID, parameters = {}) {
 
   try {
     let responses = await sessionClient.detectIntent(request);
-    console.log("Dialogflow response:", responses);
     responses = await handleAction(responses);
     return responses;
   } catch (error) {
-    console.error("Error connecting to Dialogflow:", error);
     throw error;
   }
 };
@@ -58,11 +56,9 @@ const eventQuery = async function(event, userID, parameters = {}) {
 
   try {
     let responses = await sessionClient.detectIntent(request);
-    console.log("Dialogflow response:", responses);
     responses = await handleAction(responses);
     return responses;
   } catch (error) {
-    console.error("Error connecting to Dialogflow:", error);
     throw error;
   }
 };

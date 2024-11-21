@@ -14,6 +14,6 @@ router.put('/update', authRequiredAllUsers, updateCart);
 router.delete('/remove', authRequiredAllUsers, removeFromCart);
 router.get('/total/:userId', authRequiredAllUsers, calculateTotalPrice);
 router.post('/create-checkout-session', authRequiredAllUsers, createCheckoutSession);
-router.post('/webhook', express.raw({ type: 'application/json' }), handleWebhook);
+router.post('/webhook', handleWebhook);
 
 export default router;
