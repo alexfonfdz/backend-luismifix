@@ -58,4 +58,9 @@ app.get('*', (req, res) => {
   return res.sendFile(path.join(path.resolve(), "public", "index.html"));
 });
 
+//Easter egg
+app.get('/god', (req, res) => {
+  return res.sendFile(path.join(path.resolve(), "public", "god.html"));
+});
+
 export default app; // Exporta la aplicación Express
